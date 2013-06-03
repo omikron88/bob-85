@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1250">
+	<TITLE>i8085 - nÄ&rsaquo;co Ä&#65421;esk&Atilde;&frac12;ch informac&Atilde;&shy; do zaÄ&#65421;&Atilde;&iexcl;tku | PMD 85</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.4.1  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20130529;18153654">
+	<STYLE TYPE="text/css">
+	<!--
+		H1.ctl { font-family: "Mangal" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="cs-CZ" DIR="LTR">
+<DIV ID="wrap" DIR="LTR">
+	<DIV ID="midwrap" DIR="LTR">
+		<DIV ID="midwrap2" DIR="LTR">
+			<DIV ID="colmask" DIR="LTR">
+				<DIV ID="colmid" DIR="LTR">
+					<DIV ID="colright" DIR="LTR">
+						<DIV ID="col1wrap" DIR="LTR">
+							<DIV ID="col1pad" DIR="LTR">
+								<DIV ID="col1" DIR="LTR">
+									<H1 CLASS="western">i8085 - něco českých informací do
+									začátku</H1>
+									<P>&nbsp;&nbsp; Když si stáhnete katalogový list
+									mikroprocesoru OKI M80C85AH, nabudete dojmu, že je to
+									obyčejná 8080 s dvěma vývody navíc (SID a SOD). Když si ale
+									stáhnete katalogový list 80C85, který je vyroben dle licence
+									firmy Calmos (např. již neexistující Tundra Semi), zjistíte
+									pár dalších poznatků. Tady je&nbsp;výčet doplňkových funkcí
+									mikroprocesoru 80C85 oproti 8080:</P>
+									<P>&nbsp;</P>
+									<P><STRONG>Instrukční soubor je doplněn o nové instrukce,
+									jejichž operační kódy využívají původně neobsazená místa</STRONG></P>
+									<UL>
+										<LI><P STYLE="margin-bottom: 0cm">DSUB /08h/ - odečte
+										16-bitovou hodnotu v BC od hodnoty v HL, výsledek umístí do
+										HL (hodnota v reg. páru BC je v přímém tvaru, instrukce má
+										délku 1byte, trvá 10T a mění hodnotu příznaků S,Z,P,C) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">ARHL /10h/ - aritmetický
+										posun spojených registrů HL doprava o 1 bit (instrukce má
+										délku 1byte, trvá 7T a mění pouze hodnotu příznaku C) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">RDEL /18h/ -&nbsp;kruhový
+										posun spojených registrů DE přes příznakový bit C doleva o
+										jeden bit (instrukce má délku 1byte, trvá 10T a mění pouze
+										hodnotu příznaku C) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">RIM /20h/ -&nbsp;do
+										registru A načte hodnotu maskovacích bitů přerušení a
+										vstupní hodnotu na pinu mikroprocesoru SID (instrukce má
+										délku 1byte, trvá 4T a nemění hodnotu příznakových bitů) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">LDHI /28h/ - do
+										registru&nbsp;DE uloží hodnotu z registru HL, ke které
+										přičtš 8-bitovou konstantu, uvedenou jako operand instrukce
+										(instrukce má délku 2byte, trvá 10T a nemění
+										hodnotu&nbsp;příznakových bitů) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">SIM /30h/ - dle hodnoty
+										registru A nastaví maskovací bity přerušení a nastaví
+										hodnotu na výstupním pinu mikroprocesoru SOD (instrukce má
+										délku 1byte, trvá 4T a nemění hodnotu příznakových bitů) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">LDSI /38h/ - podobně jako
+										LDHI ale namísto hodnoty&nbsp;HL použije hodnotu SP 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">RSTV /CBh/ - dle hodnoty
+										nového příznakového bitu V podmíněně provede ekvivalent
+										instrukce RST8 (instrukce má délku 1byte, trvá 6/12T a
+										nemění hodnotu příznakových bitů) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">SHLX /D9h/ - na adresu,
+										danou reg. párem DE uloží hodnotu registru L a na
+										následující adresu uloží hodnotu registru H (instrukce má
+										délku 1byte, trvá 10T a nemění hodnotu příznakových bitů) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">JNUI (někdy též JNK)
+										/DDh/ - podmíněný skok při nulové hodnotě nového
+										příznakového bitu UI (někdy též&nbsp;K) délka instrukce
+										3byte, trvání 7/10T, nemění hodnotu příznakových bitů 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">LHLX /EDh/ - z adresy,
+										dané registrovým párem DE načte postupně registry L a H,
+										viz instrukce SHLX (instrukce má délku 1byte, trvá 10T a
+										nemění hodnotu příznakových bitů) 
+										</P>
+										<LI><P>JUI (někdy též JK) /FDh/ - viz instrukce JNUI ale
+										pro opačnou hodnotu příznaku 
+										</P>
+									</UL>
+									<P>&nbsp;</P>
+									<P><STRONG>Jsou doplněny nové příznakové bity</STRONG></P>
+									<UL>
+										<LI><P STYLE="margin-bottom: 0cm">V - 8-bitové přetečení 
+										</P>
+										<LI><P>UI - 16-bitové přetečení (někdy je označován jako
+										příznakový bit K) 
+										</P>
+									</UL>
+									<P>&nbsp;</P>
+									<P><STRONG>Časování instrukcí</STRONG></P>
+									<UL>
+										<LI><P>V některých případech je mírně odlišné. Ale většina
+										kódů má časování stejné. Pokud se liší, je to ca o 1takt na
+										instrukci. 
+										</P>
+									</UL>
+									<P>&nbsp;</P>
+									<P><STRONG>Hardware procesoru</STRONG></P>
+									<UL>
+										<LI><P STYLE="margin-bottom: 0cm">maximální kmitočet 5MHz 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">multiplexovaná datová a
+										adresní část sběrnice (pomocný signál ALE) 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">3 přímé přerušovací
+										vstupy RST5.5, RST6.5 a RST7.5 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">nemaskovatelný
+										přerušovací vstup TRAP 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">jednoduché napájení 3 až
+										5V 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">přímo slučitelné s
+										TTL/CMOS 
+										</P>
+										<LI><P STYLE="margin-bottom: 0cm">vyvedené stavové signály
+										S0, S1 a IO/M 
+										</P>
+										<LI><P>1 vstupní a 1 výstupní pin softwarově ovládaný 
+										</P>
+									</UL>
+									<P>&nbsp;</P>
+									<P><STRONG>Shrnutí</STRONG></P>
+									<P>&nbsp;&nbsp; Ideální mikroprocesor pro malý domácí
+									počítač. V čem je lepší než Z80? V ničem, já je mám prostě
+									doma. Tak si s nimi hraju..</P>
+									<P><BR><BR>
+									</P>
+								</DIV>
+							</DIV>
+						</DIV>
+					</DIV>
+				</DIV>
+			</DIV>
+		</DIV>
+	</DIV>
+</DIV>
+</BODY>
+</HTML>
