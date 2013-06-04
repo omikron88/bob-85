@@ -93,6 +93,9 @@ public class Bob85 extends javax.swing.JFrame {
         ButtonNext = new javax.swing.JButton();
         ButtonExec = new javax.swing.JButton();
         BoxDebug = new javax.swing.JCheckBox();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mFile = new javax.swing.JMenu();
+        mSaveRam = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BOB-85");
@@ -124,7 +127,7 @@ public class Bob85 extends javax.swing.JFrame {
         );
         Disp2Layout.setVerticalGroup(
             Disp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         Disp3.setPointLeft(true);
@@ -138,7 +141,7 @@ public class Bob85 extends javax.swing.JFrame {
         );
         Disp3Layout.setVerticalGroup(
             Disp3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         Disp4.setPointLeft(true);
@@ -166,7 +169,7 @@ public class Bob85 extends javax.swing.JFrame {
         );
         Disp5Layout.setVerticalGroup(
             Disp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         Disp6.setPointLeft(true);
@@ -180,7 +183,7 @@ public class Bob85 extends javax.swing.JFrame {
         );
         Disp6Layout.setVerticalGroup(
             Disp6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout dispPanelLayout = new javax.swing.GroupLayout(dispPanel);
@@ -666,6 +669,20 @@ public class Bob85 extends javax.swing.JFrame {
 
         getContentPane().add(keyPanel, java.awt.BorderLayout.CENTER);
 
+        mFile.setText("File");
+
+        mSaveRam.setText("Save RAM");
+        mSaveRam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSaveRamActionPerformed(evt);
+            }
+        });
+        mFile.add(mSaveRam);
+
+        jMenuBar1.add(mFile);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -686,6 +703,10 @@ public class Bob85 extends javax.swing.JFrame {
         boolean state = BoxDebug.isSelected();
         m.setDebug(state);
     }//GEN-LAST:event_BoxDebugActionPerformed
+
+    private void mSaveRamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSaveRamActionPerformed
+        m.saveRam();
+    }//GEN-LAST:event_mSaveRamActionPerformed
 
 
     /**
@@ -762,6 +783,9 @@ public class Bob85 extends javax.swing.JFrame {
     private gui.SevenDisp Disp5;
     private gui.SevenDisp Disp6;
     private javax.swing.JPanel dispPanel;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel keyPanel;
+    private javax.swing.JMenu mFile;
+    private javax.swing.JMenuItem mSaveRam;
     // End of variables declaration//GEN-END:variables
 }

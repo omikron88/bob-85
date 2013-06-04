@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.HexFile;
 
 public final class Memory {
 
@@ -179,5 +180,20 @@ public final class Memory {
         }
 
         return res;
+    }
+
+    void saveRam() {
+        try {
+            HexFile hf = new HexFile(0xffff);
+            hf.hexOpen("test.hex");
+            hf.hexWrite(Ram[0],0,PAGE_MASK,PAGE_SIZE * 0);
+            hf.hexWrite(Ram[1],0,PAGE_MASK,PAGE_SIZE * 1);
+            hf.hexWrite(Ram[2],0,PAGE_MASK,PAGE_SIZE * 2);
+            hf.hexWrite(Ram[3],0,PAGE_MASK,PAGE_SIZE * 3);
+            hf.hexClose(0);
+        } catch (IOException ex) {
+            Logger.getLogger(Memory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

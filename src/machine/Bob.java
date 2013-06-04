@@ -6,9 +6,11 @@ package machine;
 
 import debug.Debugger;
 import gui.SevenDisp;
+import java.io.BufferedWriter;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.HexFile;
 
 /**
  *
@@ -283,5 +285,9 @@ public class Bob extends Thread implements MemIoOps, NotifyOps {
     public void setDebug(boolean state) {
         debug = state;
         dbg.setVisible(state);
+    }
+
+    public void saveRam() {
+        mem.saveRam();
     }
 }
