@@ -138,7 +138,7 @@ ADR:
 	push	psw
 	mov	a,l
 	call	ROT
-	call	L010E
+	call	POSUV
 	call	ROT
 	mov	l,a
 	pop	psw
@@ -156,7 +156,7 @@ TESTD:
 	inx	sp
 	inx	sp
 	inx	sp
-	ora	e
+	inx	sp
 	inx	sp
 	jmp	TESTQ
 ;

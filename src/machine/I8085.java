@@ -171,7 +171,7 @@ public class I8085 {
 
     private void incRegBC() {
         int reg16 = getRegBC();
-        reg16 = (reg16++) & 0xffff;
+        reg16 = (++reg16) & 0xffff;
         UFlag = (reg16 == 0x8000);
         setRegBC(reg16);
     }   
@@ -194,7 +194,7 @@ public class I8085 {
 
     private void incRegDE() {
         int reg16 = getRegDE();
-        reg16 = (reg16++) & 0xffff;
+        reg16 = (++reg16) & 0xffff;
         UFlag = (reg16 == 0x8000);
         setRegDE(reg16);
     }   
@@ -217,7 +217,7 @@ public class I8085 {
 
     private void incRegHL() {
         int reg16 = getRegHL();
-        reg16 = (reg16++) & 0xffff;
+        reg16 = (++reg16) & 0xffff;
         UFlag = (reg16 == 0x8000);
         setRegHL(reg16);
     }   
@@ -247,7 +247,7 @@ public class I8085 {
 
     private void incRegSP() {
         int reg16 = getRegSP();
-        reg16 = (reg16++) & 0xffff;
+        reg16 = (++reg16) & 0xffff;
         UFlag = (reg16 == 0x8000);
         setRegSP(reg16);
     }   
