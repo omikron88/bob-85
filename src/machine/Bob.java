@@ -44,7 +44,7 @@ public class Bob extends Thread implements MemIoOps, NotifyOps {
         clk = new Clock();
         cpu = new I8085(clk, this, this);
         
-        dbg = new Debugger();
+        dbg = new Debugger(cpu, mem);
         
         paused = true;
         
@@ -129,10 +129,10 @@ public class Bob extends Thread implements MemIoOps, NotifyOps {
     @Override
     public int fetchOpcode(int address) {
         clk.addTstates(4);
-        if (debug) {
-            dbg.Debug(cpu, mem);
-        }
         int opcode = mem.readByte(address) & 0xff;
+        if (debug) {
+            dbg.Debug(address, opcode);
+        }
 //        System.out.println(String.format("PC: %04X (%02X)", address,opcode));
         return opcode;
     }

@@ -26,15 +26,14 @@ public class Debugger extends javax.swing.JDialog {
     /**
      * Creates new form Debugger
      */
-    public Debugger() {
+    public Debugger(I8085 proc, Memory mem) {
+        cpu = proc;
+        m = mem;        
         t = new OpcodeTable();
         initComponents();
     }
     
-    public void Debug(I8085 proc, Memory mem) {
-        cpu = proc;
-        m = mem;
-        
+    public void Debug(int addr, int opcode) {
         step = false;
         
         printRegTable(regs, 0, 1, true, cpu.getRegA());
@@ -52,11 +51,14 @@ public class Debugger extends javax.swing.JDialog {
         printRegTable(flags, 0, 0, false, cpu.getFlags());
         printRegTable(sim, 0, 0, false, cpu.getRegSim());
         
-        printDisassembly(cpu.getRegPC());
+        printDisassembly(addr);
         
         if (tilRet) {
-            if (m.readByte(cpu.getRegPC()) != 0xc9) {
+            if (opcode != 0xc9) {
                 step = true;
+            }
+            else {
+                tilRet = false;
             }
         }
         while (!step) {
@@ -159,6 +161,7 @@ public class Debugger extends javax.swing.JDialog {
 
         jButton1.setText("jButton1");
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Debugger");
         setResizable(false);
 
@@ -470,10 +473,12 @@ public class Debugger extends javax.swing.JDialog {
 
     private void ButtonStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonStepActionPerformed
         step = true;
+        tilRet = false;
     }//GEN-LAST:event_ButtonStepActionPerformed
 
     private void ButtonRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRetActionPerformed
         tilRet = true;
+        step = true;
     }//GEN-LAST:event_ButtonRetActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
