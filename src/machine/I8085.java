@@ -715,11 +715,12 @@ public class I8085 {
                 intr();
             }
 
-            opCode = MemIoImpl.fetchOpcode(regPC);
-            
-            if (breakpointAt[regPC])
+            if (breakpointAt[regPC]) {
                 opCode = NotifyImpl.atAddress(regPC, opCode);
-            
+            }
+
+            opCode = MemIoImpl.fetchOpcode(regPC);
+                        
             regPC = (regPC + 1) & 0xffff;
 
             decodeOpcode(opCode);

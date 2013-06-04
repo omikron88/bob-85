@@ -94,7 +94,7 @@ public class Debugger extends javax.swing.JDialog {
         TableModel tm = dis.getModel();
         
         for(int n=0; n<l; n++) {
-            if (n==0) { val = a; }
+            if (n==1) { val = a & 0xffff; }
             tm.setValueAt(String.format("%04X", a), n, 0);
             h = String.format("%02x",m.readByte(a));
             s = t.getOpcode(h);
@@ -174,7 +174,7 @@ public class Debugger extends javax.swing.JDialog {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        regs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        regs.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         regs.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"A", "00", null, null, null, null, null, null, null, null},
@@ -227,7 +227,7 @@ public class Debugger extends javax.swing.JDialog {
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        flags.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        flags.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         flags.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"0", "0", "0", "0", "0", "0", "0", "0"}
@@ -269,7 +269,7 @@ public class Debugger extends javax.swing.JDialog {
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        sim.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sim.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         sim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"0", "0", "0", "0", "0", "0", "0", "0"}
@@ -308,16 +308,16 @@ public class Debugger extends javax.swing.JDialog {
         sim.getColumnModel().getColumn(7).setResizable(false);
         sim.getColumnModel().getColumn(7).setPreferredWidth(20);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("PC: ");
 
-        regPC.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        regPC.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         regPC.setText("0000");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setText("SP: ");
 
-        regSP.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        regSP.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         regSP.setText("0000");
 
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
@@ -372,7 +372,7 @@ public class Debugger extends javax.swing.JDialog {
         jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane4.setFocusable(false);
 
-        dis.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        dis.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         dis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -423,6 +423,7 @@ public class Debugger extends javax.swing.JDialog {
             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
+        ButtonStep.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         ButtonStep.setMnemonic(KeyEvent.VK_S);
         ButtonStep.setText("Step");
         ButtonStep.addActionListener(new java.awt.event.ActionListener() {
@@ -431,6 +432,7 @@ public class Debugger extends javax.swing.JDialog {
             }
         });
 
+        ButtonStepO.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         ButtonStepO.setMnemonic(KeyEvent.VK_R);
         ButtonStepO.setText("Step over");
         ButtonStepO.addActionListener(new java.awt.event.ActionListener() {
@@ -450,7 +452,7 @@ public class Debugger extends javax.swing.JDialog {
                         .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 1, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(ButtonStepO)
