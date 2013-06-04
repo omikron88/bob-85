@@ -231,10 +231,10 @@ public class Bob extends Thread implements MemIoOps, NotifyOps {
 
     @Override
     public int atAddress(int address, int opcode) {
-        System.out.println(String.format("bp: %04X, %02X", address,opcode));
-        System.out.println(String.format("HL: %04X DE: %04X", cpu.getRegHL(),cpu.getRegDE()));
-        System.out.println(String.format("BC: %04X AF: %04X", cpu.getRegBC(),cpu.getRegAF()));
-        
+//        System.out.println(String.format("bp: %04X, %02X", address,opcode));
+//        System.out.println(String.format("HL: %04X DE: %04X", cpu.getRegHL(),cpu.getRegDE()));
+//        System.out.println(String.format("BC: %04X AF: %04X", cpu.getRegBC(),cpu.getRegAF()));
+        dbg.Break(address, opcode);
         return opcode;
     }
 
@@ -266,7 +266,6 @@ public class Bob extends Thread implements MemIoOps, NotifyOps {
     public void setDisp6(SevenDisp disp) {
         disp6 = disp;
     }
-
 
     public void ButtonPressed(int keycode) {
         keypress = keycode | 0x80;

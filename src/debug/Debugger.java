@@ -21,7 +21,9 @@ public class Debugger extends javax.swing.JDialog {
     private OpcodeTable t;
     
     private boolean step;
-    private boolean tilRet;
+    private boolean stepO;
+    
+    private int next;
     
     /**
      * Creates new form Debugger
@@ -51,21 +53,20 @@ public class Debugger extends javax.swing.JDialog {
         printRegTable(flags, 0, 0, false, cpu.getFlags());
         printRegTable(sim, 0, 0, false, cpu.getRegSim());
         
-        printDisassembly(addr);
+        next = printDisassembly(addr);
         
-        if (tilRet) {
-            if (opcode != 0xc9) {
-                step = true;
-            }
-            else {
-                tilRet = false;
-            }
-        }
-        while (!step) {
+        while (!(step || stepO)) {
             
         }
     }
 
+    public void Break(int addr, int opcode) {
+        if (stepO) { 
+            cpu.setBreakpoint(addr, false);
+            stepO = false;
+        }    
+    }
+    
     private void printRegTable(JTable tab, int r, int c, boolean hex, int val) {
         int cc = c;
         int vv = val;
@@ -83,15 +84,17 @@ public class Debugger extends javax.swing.JDialog {
         }
     }
     
-    private void printDisassembly(int from) {
+    private int printDisassembly(int from) {
         int a = from;
         int l = dis.getRowCount();
+        int val = 0xffff;
         String s,s1,s2;
         String h;
-        
+
         TableModel tm = dis.getModel();
         
         for(int n=0; n<l; n++) {
+            if (n==0) { val = a; }
             tm.setValueAt(String.format("%04X", a), n, 0);
             h = String.format("%02x",m.readByte(a));
             s = t.getOpcode(h);
@@ -129,6 +132,7 @@ public class Debugger extends javax.swing.JDialog {
 
             tm.setValueAt(s, n, 1);
         }
+        return val;
     }
     
     /**
@@ -157,7 +161,7 @@ public class Debugger extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         dis = new javax.swing.JTable();
         ButtonStep = new javax.swing.JButton();
-        ButtonRet = new javax.swing.JButton();
+        ButtonStepO = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -427,11 +431,11 @@ public class Debugger extends javax.swing.JDialog {
             }
         });
 
-        ButtonRet.setMnemonic(KeyEvent.VK_R);
-        ButtonRet.setText("Go until ret");
-        ButtonRet.addActionListener(new java.awt.event.ActionListener() {
+        ButtonStepO.setMnemonic(KeyEvent.VK_R);
+        ButtonStepO.setText("Step over");
+        ButtonStepO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonRetActionPerformed(evt);
+                ButtonStepOActionPerformed(evt);
             }
         });
 
@@ -449,7 +453,7 @@ public class Debugger extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(ButtonRet)
+                        .addComponent(ButtonStepO)
                         .addGap(18, 18, 18)
                         .addComponent(ButtonStep)
                         .addContainerGap())))
@@ -464,7 +468,7 @@ public class Debugger extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonStep)
-                    .addComponent(ButtonRet))
+                    .addComponent(ButtonStepO))
                 .addContainerGap())
         );
 
@@ -473,17 +477,17 @@ public class Debugger extends javax.swing.JDialog {
 
     private void ButtonStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonStepActionPerformed
         step = true;
-        tilRet = false;
+        stepO = false;
     }//GEN-LAST:event_ButtonStepActionPerformed
 
-    private void ButtonRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRetActionPerformed
-        tilRet = true;
-        step = true;
-    }//GEN-LAST:event_ButtonRetActionPerformed
+    private void ButtonStepOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonStepOActionPerformed
+        cpu.setBreakpoint(next, true);
+        stepO = true;
+    }//GEN-LAST:event_ButtonStepOActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonRet;
     private javax.swing.JButton ButtonStep;
+    private javax.swing.JButton ButtonStepO;
     private javax.swing.JTable dis;
     private javax.swing.JTable flags;
     private javax.swing.JButton jButton1;

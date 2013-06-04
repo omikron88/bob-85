@@ -42,7 +42,7 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="ButtonRet" min="-2" max="-2" attributes="0"/>
+                      <Component id="ButtonStepO" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="ButtonStep" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -62,7 +62,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ButtonStep" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ButtonRet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonStepO" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -563,15 +563,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonStepActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="ButtonRet">
+    <Component class="javax.swing.JButton" name="ButtonStepO">
       <Properties>
         <Property name="mnemonic" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="KeyEvent.VK_R" type="code"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Go until ret"/>
+        <Property name="text" type="java.lang.String" value="Step over"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonRetActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonStepOActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
