@@ -43,16 +43,16 @@ Last 2 Checksum:
 
 public class HexFile {
     public static final int RADIX=16;
-    public static final int LINE_LENGTH=32; 
-    private static int MaxAddress;
+    public static final int LINE_LENGTH=16; 
+    private HexMem mem;
     private File f;
     private BufferedWriter bw = null;
     
-    public HexFile(int maxaddr) {
-        MaxAddress = maxaddr;
+    public HexFile(HexMem memory) {
+        mem = memory;
     } 
     
-    public void hexRead(String name, byte[] data, int start) 
+    public void hexRead(String name, int offs) 
             throws FileNotFoundException, IOException {
   
         File f = new File(name);
@@ -81,12 +81,11 @@ public class HexFile {
 	    //Extract the code bytes.
 
 	    temp = (byte) (9 + (2 * dataLen));
-	    for (i = 9, a = address+start; i < temp; i = i + 2, a++) {
-		if (a > MaxAddress) 
-		    throw new IllegalArgumentException("invalid address in record " +
-						       recNum);
+	    for (i = 9, a = address+offs; i < temp; i = i + 2, a++) {
+		a &= 0xffff;
+
                 if (recType == 0) {
-                    data[a] = (byte) (Integer.parseInt(rec.substring(i, (i + 2)), RADIX));
+                    mem.WriteByte(a, (Integer.parseInt(rec.substring(i, (i + 2)), RADIX)));
                 }
 	    }
 
@@ -99,11 +98,12 @@ public class HexFile {
 		k++;
 	    }
 	    
-	    compChecksum =  (byte) ((sum % 256) * (0xFF));
 	    checksum = (byte) (Integer.parseInt(rec.substring((recLen - 2), 
 								 recLen), RADIX));
+            sum += checksum;
+            compChecksum =  (byte) ((sum % 256) & 0xFF);
 
-	    if (compChecksum != checksum) 
+	    if (compChecksum != 0) 
 		throw new IllegalArgumentException("invalid checksum in record " + recNum);
         }
     }
@@ -114,7 +114,7 @@ public class HexFile {
         bw = new BufferedWriter(new FileWriter(f));
     }
     
-    public void hexWrite(byte[] data, int from, int to, int offs) 
+    public void hexWrite(int from, int to, int offs) 
             throws IOException {
         int a = (from + offs) & 0xffff;
         int sum = 0; 
@@ -126,15 +126,16 @@ public class HexFile {
                 sum = ((a>>>8) & 0xff) + (a & 0xff);
                 len = (to-n)+1;
                 if (len>LINE_LENGTH) { len = LINE_LENGTH; }
-                sum = (sum+len) & 0xff;
-                bw.write(String.format(":00%02X%04X", len, a));
+                sum += len;
+                bw.write(String.format(":%02X%04X00", len, a));
             }
-            bw.write(String.format("%02X", data[n] & 0xff));
-            sum = (sum+(data[n] & 0xff)) & 0xff;
+            bw.write(String.format("%02X", 0xff & mem.ReadByte(a)));
+            sum += mem.ReadByte(a) & 0xff;
             num++;
             if ((num==LINE_LENGTH) || (n==to) ) {
                 num = 0;
-                bw.write(String.format("%02X", 255-sum));
+                sum = (sum % 256) & 0xff;
+                bw.write(String.format("%02X", (0-sum) & 0xff));
                 bw.newLine();
             }
         }
@@ -142,8 +143,8 @@ public class HexFile {
 
     public void hexClose(int starta) throws IOException {
         int sum = ((starta>>>8) & 0xff) + (starta & 0xff) + 1; 
-            sum &= 0xff;
-            bw.write(String.format(":0100%04X%02X", starta, 255-sum));
+            sum = (sum % 256) & 0xff;
+            bw.write(String.format(":00%04X01%02X", starta, (0-sum)  & 0xff));
             bw.newLine();
             bw.close();
             bw = null;

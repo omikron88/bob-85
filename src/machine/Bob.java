@@ -6,17 +6,18 @@ package machine;
 
 import debug.Debugger;
 import gui.SevenDisp;
-import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.HexFile;
+import utils.HexMem;
 
 /**
  *
  * @author Administrator
  */
-public class Bob extends Thread implements MemIoOps, NotifyOps {
+public class Bob extends Thread implements MemIoOps, NotifyOps, HexMem {
     
     private final int T = 2500000 / 50;
     
@@ -245,6 +246,17 @@ public class Bob extends Thread implements MemIoOps, NotifyOps {
     
     }
     
+    @Override
+    public int ReadByte(int address) {
+        int value = mem.readByte(address) & 0xff;
+        return value;
+    }
+
+    @Override
+    public void WriteByte(int address, int value) {
+        mem.writeByte(address, (byte) value);
+    }
+
     public void setDisp1(SevenDisp disp) {
         disp1 = disp;
     }
@@ -287,7 +299,24 @@ public class Bob extends Thread implements MemIoOps, NotifyOps {
         dbg.setVisible(state);
     }
 
-    public void saveRam() {
-        mem.saveRam();
+    public void saveRam(String name) {
+        try {
+            HexFile hx = new HexFile(this);
+            hx.hexOpen(name);
+            hx.hexWrite(0x0600, 0x09ff, 0);
+            hx.hexClose(0);
+        } catch (IOException ex) {
+            Logger.getLogger(Bob.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void loadRam(String name) {
+        try {
+            HexFile hx = new HexFile(this);
+            hx.hexRead(name, 0);
+        } catch (IOException ex) {
+            Logger.getLogger(Bob.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cpu.setRegPC(0);
     }
 }

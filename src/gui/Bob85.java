@@ -7,7 +7,10 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.awt.image.ImageObserver;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import machine.Bob;
 
 /**
@@ -17,6 +20,7 @@ import machine.Bob;
 public class Bob85 extends javax.swing.JFrame {
 
     private final byte segMap[] = {4,5,6,7,0,1,2,3};
+    private final ExtendedFileFilter hex = new ExtendedFileFilter("Hex file", ".hex");
     
     private Bob m;
     
@@ -60,6 +64,7 @@ public class Bob85 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fc = new javax.swing.JFileChooser();
         dispPanel = new javax.swing.JPanel();
         Disp1 = new gui.SevenDisp();
         Disp2 = new gui.SevenDisp();
@@ -95,7 +100,10 @@ public class Bob85 extends javax.swing.JFrame {
         BoxDebug = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
+        mLoadRam = new javax.swing.JMenuItem();
         mSaveRam = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        mExit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BOB-85");
@@ -113,7 +121,7 @@ public class Bob85 extends javax.swing.JFrame {
         );
         Disp1Layout.setVerticalGroup(
             Disp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 104, Short.MAX_VALUE)
         );
 
         Disp2.setPointLeft(true);
@@ -155,7 +163,7 @@ public class Bob85 extends javax.swing.JFrame {
         );
         Disp4Layout.setVerticalGroup(
             Disp4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         Disp5.setPointLeft(true);
@@ -183,7 +191,7 @@ public class Bob85 extends javax.swing.JFrame {
         );
         Disp6Layout.setVerticalGroup(
             Disp6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 104, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout dispPanelLayout = new javax.swing.GroupLayout(dispPanel);
@@ -191,7 +199,7 @@ public class Bob85 extends javax.swing.JFrame {
         dispPanelLayout.setHorizontalGroup(
             dispPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dispPanelLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Disp1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Disp2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -577,7 +585,7 @@ public class Bob85 extends javax.swing.JFrame {
                         .addComponent(ButtonRst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ButtonGo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(keyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, keyPanelLayout.createSequentialGroup()
                         .addComponent(Button0, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -671,6 +679,16 @@ public class Bob85 extends javax.swing.JFrame {
 
         mFile.setText("File");
 
+        mLoadRam.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        mLoadRam.setText("Load RAM");
+        mLoadRam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mLoadRamActionPerformed(evt);
+            }
+        });
+        mFile.add(mLoadRam);
+
+        mSaveRam.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         mSaveRam.setText("Save RAM");
         mSaveRam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -678,6 +696,16 @@ public class Bob85 extends javax.swing.JFrame {
             }
         });
         mFile.add(mSaveRam);
+        mFile.add(jSeparator1);
+
+        mExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        mExit.setText("Exit");
+        mExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mExitActionPerformed(evt);
+            }
+        });
+        mFile.add(mExit);
 
         jMenuBar1.add(mFile);
 
@@ -705,8 +733,46 @@ public class Bob85 extends javax.swing.JFrame {
     }//GEN-LAST:event_BoxDebugActionPerformed
 
     private void mSaveRamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSaveRamActionPerformed
-        m.saveRam();
+        m.stopEmulation();
+        
+        fc.setFileFilter(hex);
+        fc.setDialogTitle("Save RAM to Hex file");
+        int val = fc.showSaveDialog(this);
+        
+        if (val==JFileChooser.APPROVE_OPTION) {
+            try {
+                String s = fc.getSelectedFile().getCanonicalPath();
+                if (!s.endsWith(hex.extension)) { s = s + hex.extension; }
+                m.saveRam(s);
+            } catch (IOException ex) {
+                Logger.getLogger(Bob85.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        m.startEmulation();
     }//GEN-LAST:event_mSaveRamActionPerformed
+
+    private void mLoadRamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mLoadRamActionPerformed
+        m.stopEmulation();
+        
+        fc.setFileFilter(hex);        
+        fc.setDialogTitle("Load RAM from Hex file");
+        int val = fc.showOpenDialog(this);
+        
+        if (val==JFileChooser.APPROVE_OPTION) {
+            try {
+                m.loadRam(fc.getSelectedFile().getCanonicalPath());
+            } catch (IOException ex) {
+                Logger.getLogger(Bob85.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        m.startEmulation();        
+    }//GEN-LAST:event_mLoadRamActionPerformed
+
+    private void mExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mExitActionPerformed
 
 
     /**
@@ -783,9 +849,13 @@ public class Bob85 extends javax.swing.JFrame {
     private gui.SevenDisp Disp5;
     private gui.SevenDisp Disp6;
     private javax.swing.JPanel dispPanel;
+    private javax.swing.JFileChooser fc;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel keyPanel;
+    private javax.swing.JMenuItem mExit;
     private javax.swing.JMenu mFile;
+    private javax.swing.JMenuItem mLoadRam;
     private javax.swing.JMenuItem mSaveRam;
     // End of variables declaration//GEN-END:variables
 }
