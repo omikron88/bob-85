@@ -35,7 +35,8 @@ public class I8085 {
 
     private boolean pendingEI = false;
     private boolean activeTRAP = false;
-    private boolean activeINT  = false;    
+    private boolean activeINT  = false;  
+    private boolean intack  = false;  
     
     private boolean halted = false;
 
@@ -87,6 +88,10 @@ public class I8085 {
     
     public final boolean isActiveInt() {
         return activeINT;
+    }
+    
+    public final boolean isIntAck() {
+        return intack;
     }
     
     public final void setActiveInt(boolean state) {
@@ -551,15 +556,19 @@ public class I8085 {
         VFlag = (((regA ^ oper8) & (regA ^ res)) > 0x7f);
     }
 
-   private void daa() {
+    private void daa() {
         int suma = 0;
 
         if ((Flags & H_MASK) != 0 || (regA & 0x0f) > 0x09) {
             suma = 6;
         }
 
-        if (carryFlag || ((regA & 0xf0) > 0x90)) {
+        if (carryFlag || (regA > 0x99)) {
             suma |= 0x60;
+        }
+
+        if (regA > 0x99) {
+            carryFlag = true;
         }
 
         add(suma);
@@ -682,8 +691,7 @@ public class I8085 {
         clock.addTstates(7);
         
         regSim &= ~0x08;
-        push(regPC);
-        regPC = memptr = 0x003C;    
+        intack = true;
     }
 
     public final void execute(int statesLimit) {
@@ -715,13 +723,15 @@ public class I8085 {
                 intr();
             }
 
-            if (breakpointAt[regPC]) {
+            if (breakpointAt[regPC] && !intack) {
                 opCode = NotifyImpl.atAddress(regPC, opCode);
             }
 
             opCode = MemIoImpl.fetchOpcode(regPC);
-                        
-            regPC = (regPC + 1) & 0xffff;
+            
+            if (!intack) {
+                regPC = (regPC + 1) & 0xffff;            
+            }
 
             decodeOpcode(opCode);
 
@@ -732,6 +742,8 @@ public class I8085 {
             if (execDone) {
                 NotifyImpl.execDone();
             }
+            
+            intack = false;
 
         } // while
     }
