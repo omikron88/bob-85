@@ -97,7 +97,6 @@ public class Bob85 extends javax.swing.JFrame {
         ButtonRec = new javax.swing.JButton();
         ButtonNext = new javax.swing.JButton();
         ButtonExec = new javax.swing.JButton();
-        BoxDebug = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
         mLoadRam = new javax.swing.JMenuItem();
@@ -554,16 +553,6 @@ public class Bob85 extends javax.swing.JFrame {
             }
         });
 
-        BoxDebug.setBackground(new java.awt.Color(22, 22, 22));
-        BoxDebug.setForeground(new java.awt.Color(240, 240, 240));
-        BoxDebug.setText("Debug");
-        BoxDebug.setFocusable(false);
-        BoxDebug.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BoxDebugActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout keyPanelLayout = new javax.swing.GroupLayout(keyPanel);
         keyPanel.setLayout(keyPanelLayout);
         keyPanelLayout.setHorizontalGroup(
@@ -585,7 +574,7 @@ public class Bob85 extends javax.swing.JFrame {
                         .addComponent(ButtonRst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ButtonGo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(keyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, keyPanelLayout.createSequentialGroup()
                         .addComponent(Button0, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -620,10 +609,6 @@ public class Bob85 extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(ButtonF, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))
-            .addGroup(keyPanelLayout.createSequentialGroup()
-                .addGap(252, 252, 252)
-                .addComponent(BoxDebug)
-                .addContainerGap())
         );
         keyPanelLayout.setVerticalGroup(
             keyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,10 +652,6 @@ public class Bob85 extends javax.swing.JFrame {
                     .addComponent(Button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38))
-            .addGroup(keyPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BoxDebug)
-                .addContainerGap())
         );
 
         Button0.getAccessibleContext().setAccessibleName("");
@@ -726,11 +707,6 @@ public class Bob85 extends javax.swing.JFrame {
     private void ButtonExecAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonExecAction
         m.ExecPressed();
     }//GEN-LAST:event_ButtonExecAction
-
-    private void BoxDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxDebugActionPerformed
-        boolean state = BoxDebug.isSelected();
-        m.setDebug(state);
-    }//GEN-LAST:event_BoxDebugActionPerformed
 
     private void mSaveRamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSaveRamActionPerformed
         m.stopEmulation();
@@ -817,7 +793,6 @@ public class Bob85 extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox BoxDebug;
     private javax.swing.JButton Button0;
     private javax.swing.JButton Button1;
     private javax.swing.JButton Button2;
@@ -851,7 +826,7 @@ public class Bob85 extends javax.swing.JFrame {
     private javax.swing.JPanel dispPanel;
     private javax.swing.JFileChooser fc;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel keyPanel;
     private javax.swing.JMenuItem mExit;
     private javax.swing.JMenu mFile;
