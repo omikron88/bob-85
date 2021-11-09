@@ -4,7 +4,6 @@
  */
 package machine;
 
-import debug.Debugger;
 import gui.SevenDisp;
 import java.io.IOException;
 import java.util.Timer;
@@ -27,9 +26,7 @@ public class Bob extends Thread implements MemIoOps, NotifyOps, HexMem {
     private MTimer task;
     public  Clock clk;
     private I8085 cpu;
-    
-    private Debugger dbg;
-    
+        
     private boolean paused;
     private boolean debug = false;
     
@@ -46,9 +43,7 @@ public class Bob extends Thread implements MemIoOps, NotifyOps, HexMem {
         tim = new Timer("Timer");
         clk = new Clock();
         cpu = new I8085(clk, this, this);
-        
-        dbg = new Debugger(cpu, mem);
-        
+            
         paused = true;
         
         Reset(true);
@@ -133,9 +128,6 @@ public class Bob extends Thread implements MemIoOps, NotifyOps, HexMem {
     public int fetchOpcode(int address) {
         clk.addTstates(4);
         int opcode = mem.readByte(address) & 0xff;
-        if (debug) {
-            dbg.Debug(address, opcode);
-        }
 //        System.out.println(String.format("PC: %04X (%02X)", address,opcode));
         return opcode;
     }
@@ -237,7 +229,6 @@ public class Bob extends Thread implements MemIoOps, NotifyOps, HexMem {
 //        System.out.println(String.format("bp: %04X, %02X", address,opcode));
 //        System.out.println(String.format("HL: %04X DE: %04X", cpu.getRegHL(),cpu.getRegDE()));
 //        System.out.println(String.format("BC: %04X AF: %04X", cpu.getRegBC(),cpu.getRegAF()));
-        dbg.Break(address, opcode);
         return opcode;
     }
 
@@ -292,11 +283,6 @@ public class Bob extends Thread implements MemIoOps, NotifyOps, HexMem {
 
     public void ExecPressed() {
         cpu.doInt75();
-    }
-
-    public void setDebug(boolean state) {
-        debug = state;
-        dbg.setVisible(state);
     }
 
     public void saveRam(String name) {
